@@ -25,6 +25,7 @@ public:
     dictionary() {};
     int readFromFile(std::string fileName);
     void printDefinition(std::string word);
+    void addWord(std::string word, std::string definition);
     void print();
 };
 

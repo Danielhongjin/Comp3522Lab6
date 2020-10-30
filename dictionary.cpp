@@ -69,3 +69,15 @@ void dictionary::print() {
         std::cout << word.second.word << " - " << word.second.definition << std::endl;
     }
 }
+
+void dictionary::addWord(std::string word, std::string definition) {
+    if (definition.size() > 0 && word.size() > 0) {
+        word_t pair;
+        pair.word = word;
+        pair.definition = definition;
+        std::transform(word.begin(), word.end(), word.begin(), ::tolower);
+        definitions.insert(std::make_pair(word, pair));
+    } else {
+        std::cout << "You can't just hand me an empty word or definition and expect to get away with it" << std::endl;
+    }
+}
