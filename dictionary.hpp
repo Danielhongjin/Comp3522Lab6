@@ -15,7 +15,11 @@
 
 class dictionary {
 private:
-    std::map<std::string, std::string> definitions;
+    struct word_t {
+        std::string word;
+        std::string definition;
+    };
+    std::map<std::string, word_t> definitions;
     std::string currentFile;
 public:
     dictionary() {};

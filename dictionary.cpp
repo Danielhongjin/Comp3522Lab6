@@ -8,6 +8,7 @@
 
 #include "dictionary.hpp"
 
+
 int dictionary::readFromFile(std::string fileName) {
     std::fstream file{fileName};
     currentFile = fileName;
@@ -34,10 +35,15 @@ int dictionary::readFromFile(std::string fileName) {
             } catch (std::exception& e) {
                 std::cout << "Malformed entry at line " << lineNumber << std::endl;
             }
-            std::transform(word.begin(), word.end(), word.begin(), ::tolower);
             definition = temp.substr(index, temp.size());
+
+            word_t pair;
+            pair.word = word;
+            pair.definition = definition;
+            std::transform(word.begin(), word.end(), word.begin(), ::tolower);
+
             if (definition.size() > 0 && word.size() > 0) {
-                definitions.insert(std::make_pair(word, definition));
+                definitions.insert(std::make_pair(word, pair));
             } else {
                 std::cout << "Malformed entry at line " << lineNumber << std::endl;
             }
@@ -50,9 +56,9 @@ int dictionary::readFromFile(std::string fileName) {
 void dictionary::printDefinition(std::string word) {
     std::string key = word;
     std::transform(key.begin(), key.end(), key.begin(), ::tolower);
-    std::map<std::string, std::string>::iterator pair = definitions.find(key);
+    std::map<std::string, word_t>::iterator pair = definitions.find(key);
     if (pair != definitions.end()) {
-        std::cout << pair->second << std::endl;
+        std::cout << pair->second.definition << std::endl;
     } else {
         std::cout << "the word doesn't exist";
     }
@@ -60,6 +66,6 @@ void dictionary::printDefinition(std::string word) {
 void dictionary::print() {
     for(auto word : definitions)
     {
-        std::cout << word.first << " " << word.second << std::endl;
+        std::cout << word.second.word << " - " << word.second.definition << std::endl;
     }
 }
